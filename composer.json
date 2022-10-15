@@ -1,0 +1,39 @@
+{
+    "name": "khazl/loot-calculator",
+    "description": ":package_description",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Guido Gasper"
+        }
+    ],
+    "homepage": "https://github.com/khazl/loot-calculator",
+    "keywords": ["Laravel", "LootCalculator"],
+    "require": {
+        "illuminate/support": "~9"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^9.5",
+        "orchestra/testbench": "~7"
+    },
+    "autoload": {
+        "psr-4": {
+            "Khazl\\LootCalculator\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Khazl\\LootCalculator\\Tests\\": "tests"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Khazl\\LootCalculator\\LootCalculatorServiceProvider"
+            ],
+            "aliases": {
+                "LootCalculator": "Khazl\\LootCalculator\\Facades\\LootCalculator"
+            }
+        }
+    }
+}
