@@ -17,7 +17,7 @@ class WolfLoot implements WolfLootInterface
         $this->lootPool = new Lootbox([
             new Item(25, ['id' => 123, 'name' => 'Leather']),
             new Item(35, ['id' => 456, 'name' => 'Claw']),
-            new Item(0.5, ['id' => 999, 'name' => 'Very Raw Pet']),
+            new Item(0.5, ['id' => 999, 'name' => 'Very Rare Pet']),
         ]);
     }
 

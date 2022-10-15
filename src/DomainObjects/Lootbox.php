@@ -8,6 +8,7 @@ use Khazl\LootCalculator\Contracts\LootboxInterface;
 class Lootbox implements LootboxInterface
 {
     private array $content = [];
+    private float $weight = 0;
     private ItemInterface $blank;
 
     public function __construct(array $items = [])
@@ -28,6 +29,7 @@ class Lootbox implements LootboxInterface
         }
 
         $this->content[] = $item;
+        $this->weight += $item->getWeight();
         return true;
     }
 
@@ -36,6 +38,7 @@ class Lootbox implements LootboxInterface
         foreach ($this->content as $index => $alreadyExistingItem) {
             if ($item == $alreadyExistingItem) {
                 unset($this->content[$index]);
+                $this->weight -= $item->getWeight();
             }
         }
     }
@@ -47,11 +50,7 @@ class Lootbox implements LootboxInterface
 
     public function getTotalWeight(): float
     {
-        $weight = 0;
-        foreach ($this->content as $item) {
-            $weight += $item->getWeight();
-        }
-        return $weight;
+        return $this->weight;
     }
 
     private function itemAlreadyExists(ItemInterface $item): bool
