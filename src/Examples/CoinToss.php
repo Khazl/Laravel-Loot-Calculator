@@ -19,6 +19,6 @@ class CoinToss
 
     public function flip(): string
     {
-        return $this->coin->draw();
+        return $this->coin->draw(); // Heads || Tails
     }
 }

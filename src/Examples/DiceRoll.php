@@ -23,6 +23,6 @@ class DiceRoll
 
     public function roll(): int
     {
-        return $this->dice->draw();
+        return $this->dice->draw(); // 1 || 2 || 3 || 4 || 5 || 6
     }
 }

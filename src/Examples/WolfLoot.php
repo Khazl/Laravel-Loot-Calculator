@@ -26,6 +26,6 @@ class WolfLoot
         for ($i = 0; $i < 3; $i++) {
             $loot[] = $this->lootPool->draw();
         }
-        return $loot;
+        return $loot; // ['CharacterItem:462', 'CharacterItem:9875', 'AccountItem:64']
     }
 }
