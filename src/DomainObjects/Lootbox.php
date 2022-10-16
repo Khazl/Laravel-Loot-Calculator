@@ -2,45 +2,43 @@
 
 namespace Khazl\LootCalculator\DomainObjects;
 
-use Khazl\LootCalculator\Contracts\ItemInterface;
 use Khazl\LootCalculator\Contracts\LootboxInterface;
 
+// TODO: Not an DomainObject anymore. Move to another place!
 class Lootbox implements LootboxInterface
 {
     private array $content = [];
     private float $weight = 0;
-    private ItemInterface $blank;
 
     public function __construct(array $items = [])
     {
-        $this->blank = new Item(0, null);
-        foreach ($items as $item) {
-            $this->add($item);
+        foreach ($items as $itemReference => $weight) {
+            $this->add($itemReference, $weight);
         }
     }
 
-    public function add(ItemInterface $item): bool
+    public function add(string $itemReference, int $weight): bool
     {
-        if (
-            $this->getTotalWeight() + $item->getWeight() > 100 ||
-            $this->itemAlreadyExists($item))
-        {
+        if ($this->itemAlreadyExists($itemReference)) {
             return false;
         }
 
-        $this->content[] = $item;
-        $this->weight += $item->getWeight();
+        $this->content[$itemReference] = $weight;
+        $this->weight += $weight;
+
         return true;
     }
 
-    public function remove(ItemInterface $item): void
+    public function remove(string $itemReference): bool
     {
-        foreach ($this->content as $index => $alreadyExistingItem) {
-            if ($item == $alreadyExistingItem) {
-                unset($this->content[$index]);
-                $this->weight -= $item->getWeight();
-            }
+        if ($this->itemAlreadyExists($itemReference)) {
+            $weight = $this->content[$itemReference];
+            unset($this->content[$itemReference]);
+            $this->weight -= $weight;
+            return true;
         }
+
+        return false;
     }
 
     public function getContent(): array
@@ -53,31 +51,27 @@ class Lootbox implements LootboxInterface
         return $this->weight;
     }
 
-    private function itemAlreadyExists(ItemInterface $item): bool
+    private function itemAlreadyExists(string $itemReference): bool
     {
-        foreach ($this->content as $alreadyExistingItem) {
-            if ($item == $alreadyExistingItem) {
-                return true;
-            }
-        }
-        return false;
+        return isset($this->content[$itemReference]);
     }
 
-    public function draft(): ItemInterface
+    public function draw(): string
     {
         $roll = $this->roll();
         $pointer = 0;
-        foreach ($this->getContent() as $item) {
-            $pointer += $item->getWeight();
+        foreach ($this->content as $itemReference => $weight) {
+            $pointer += $weight;
             if ($roll <= $pointer) {
-                return $item;
+                return $itemReference;
             }
         }
-        return $this->blank;
+
+        throw new \Exception('Can not draw anything from an empty lootbox!');
     }
 
-    private function roll(int $min = 0, int $max = 100): float
+    private function roll(): int
     {
-        return mt_rand($min, $max * 10) / 10 ;
+        return mt_rand(0, $this->weight);
     }
 }

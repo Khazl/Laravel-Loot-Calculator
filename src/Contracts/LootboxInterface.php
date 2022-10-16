@@ -4,13 +4,13 @@ namespace Khazl\LootCalculator\Contracts;
 
 interface LootboxInterface
 {
-    public function add(ItemInterface $item): bool;
+    public function add(string $itemReference, int $weight): bool;
 
-    public function remove(ItemInterface $item): void;
+    public function remove(string $itemReference): bool;
 
     public function getContent(): array;
 
     public function getTotalWeight(): float;
 
-    public function draft(): ItemInterface;
+    public function draw(): string;
 }

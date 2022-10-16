@@ -11,35 +11,35 @@ class LootboxObjectTest extends TestCase
     public function test_adding_items_manually()
     {
         $lootbox = new Lootbox();
-        $lootbox->add(new Item(50, ['name' => 'First Item']));
+        $lootbox->add('First Item', 50);
 
         $this->assertEquals(1, count($lootbox->getContent()));
-        $this->assertEquals('First Item', $lootbox->getContent()[0]->getPayload()['name']);
+        $this->assertEquals(50, $lootbox->getContent()['First Item']);
     }
 
     public function test_adding_items_construct()
     {
         $lootbox = new Lootbox([
-            new Item(20, ['name' => 'First Item']),
-            new Item(20, ['name' => 'Second Item'])
+            'First Item' => 20,
+            'Second Item' => 30
         ]);
 
         $content = $lootbox->getContent();
 
         $this->assertEquals(2, count($lootbox->getContent()));
-        $this->assertEquals('First Item', $content[0]->getPayload()['name']);
-        $this->assertEquals('Second Item', $content[1]->getPayload()['name']);
+        $this->assertEquals(20, $content['First Item']);
+        $this->assertEquals(30, $content['Second Item']);
     }
 
     public function test_removing_items()
     {
         $lootbox = new Lootbox();
-        $lootbox->add(new Item(50, ['name' => 'First Item']));
-        $lootbox->add(new Item(10, ['name' => 'Second Item']));
+        $lootbox->add('First Item', 50);
+        $lootbox->add('Second Item', 10);
 
         $this->assertEquals(2, count($lootbox->getContent()));
 
-        $lootbox->remove(new Item(10, ['name' => 'Second Item']));
+        $lootbox->remove('Second Item');
 
         $this->assertEquals(1, count($lootbox->getContent()));
     }
@@ -47,93 +47,58 @@ class LootboxObjectTest extends TestCase
     public function test_total_weight()
     {
         $lootbox = new Lootbox();
-        $lootbox->add(new Item(50, ['name' => 'First Item']));
-        $lootbox->add(new Item(10, ['name' => 'Second Item']));
-        $lootbox->add(new Item(10, ['name' => 'Third Item']));
+        $lootbox->add('First Item', 50);
+        $lootbox->add('Second Item',10);
+        $lootbox->add('Third Item', 10);
 
         $this->assertEquals(70, $lootbox->getTotalWeight());
 
-        $lootbox->remove(new Item(50, ['name' => 'First Item']));
+        $lootbox->remove('First Item');
 
         $this->assertEquals(20, $lootbox->getTotalWeight());
     }
 
-    public function test_total_weight_not_over_100()
+    public function test_draw_50_50()
     {
         $lootbox = new Lootbox();
-        $lootbox->add(new Item(50, ['name' => 'First Item']));
-        $lootbox->add(new Item(50, ['name' => 'Second Item']));
-        $lootbox->add(new Item(50, ['name' => 'Third Item']));
 
-        $content = $lootbox->getContent();
-        $this->assertEquals(2, count($content));
-        $this->assertEquals('First Item', $content[0]->getPayload()['name']);
-        $this->assertEquals('Second Item', $content[1]->getPayload()['name']);
-        $this->assertEquals(100, $lootbox->getTotalWeight());
+        $lootbox->add('First Item', 50);
+        $lootbox->add('Second Item', 50);
 
-        $lootbox->remove(new Item(50, ['name' => 'Second Item']));
-        $lootbox->add(new Item(70, ['name' => 'Second Item']));
-
-        $this->assertEquals(50, $lootbox->getTotalWeight());
-        $this->assertEquals(1, count($lootbox->getContent()));
+        $this->assertContains($lootbox->draw(), ['First Item', 'Second Item']);
     }
 
-    public function test_draft_50_50()
+    public function test_draw_empty_lootbox()
     {
         $lootbox = new Lootbox();
 
-        $itemA = new Item(50, ['name' => 'First Item']);
-        $itemB = new Item(50, ['name' => 'Second Item']);
+        $this->expectException(\Exception::class);
 
-        $lootbox->add($itemA);
-        $lootbox->add($itemB);
-
-        $draft = $lootbox->draft();
-
-        $this->assertNotEquals("", $draft);
-        $this->assertContains($draft, [$itemA, $itemB]);
+        $lootbox->draw();
     }
 
-    public function test_draft_empty_lootbox()
+    public function test_draw_distribution()
     {
         $lootbox = new Lootbox();
 
-        $draft = $lootbox->draft()->getPayload();
-
-        $this->assertEquals(null, $draft);
-    }
-
-    public function test_draft_distribution()
-    {
-        $lootbox = new Lootbox();
-
-        $lootbox->add(new Item(50, ['itemId' => 1]));
-        $lootbox->add(new Item(0.1, ['itemId' => 2]));
+        $lootbox->add('Item:45', 49);
+        $lootbox->add('Item:687', 1);
 
         $loot = [
-            null => 0,
-            1 => 0,
-            2 => 0
+            'Item:45' => 0,
+            'Item:687' => 0
         ];
 
-        // Draft 100.000 times
+        // draw 100.000 times
         for ($i = 0; $i <= 100000; $i++) {
-            $win = $lootbox->draft()->getPayload();
-            if ($win) {
-                $loot[$win['itemId']]++;
-                continue;
-            }
-            $loot[null]++;
+            $loot[$lootbox->draw()]++;
         }
 
         // 30% fluctuation to make the test less flaky
-        $this->assertGreaterThan(70, $loot[2]);
-        $this->assertLessThan(130, $loot[2]);
+        $this->assertGreaterThan(68600, $loot['Item:45']);
+        $this->assertLessThan(98600, $loot['Item:45']);
 
-        $this->assertGreaterThan(35000, $loot[1]);
-        $this->assertLessThan(65000, $loot[1]);
-
-        $this->assertGreaterThan(35000, $loot[null]);
-        $this->assertLessThan(65000, $loot[null]);
+        $this->assertGreaterThan(1400, $loot['Item:687']);
+        $this->assertLessThan(2600, $loot['Item:687']);
     }
 }
