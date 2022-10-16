@@ -72,6 +72,6 @@ class Lootbox implements LootboxInterface
 
     private function roll(): int
     {
-        return mt_rand(0, $this->weight);
+        return mt_rand(1, $this->weight);
     }
 }
