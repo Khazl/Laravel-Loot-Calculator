@@ -23,6 +23,10 @@ class Lootbox implements LootboxInterface
             return false;
         }
 
+        if ($weight <= 0) {
+            throw new \ValueError('Can not add items with weight less than or equal to 0 to the lootbox!');
+        }
+
         $this->content[$itemReference] = $weight;
         $this->weight += $weight;
 
@@ -58,6 +62,10 @@ class Lootbox implements LootboxInterface
 
     public function draw(): string
     {
+        if ($this->weight <= 0) {
+            throw new \Exception('Can not draw anything from an empty lootbox!');
+        }
+
         $roll = $this->roll();
         $pointer = 0;
         foreach ($this->content as $itemReference => $weight) {
@@ -66,8 +74,6 @@ class Lootbox implements LootboxInterface
                 return $itemReference;
             }
         }
-
-        throw new \Exception('Can not draw anything from an empty lootbox!');
     }
 
     private function roll(): int

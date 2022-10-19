@@ -2,7 +2,6 @@
 
 namespace Khazl\LootCalculator\Tests\Unit;
 
-use Khazl\LootCalculator\DomainObjects\Item;
 use Khazl\LootCalculator\DomainObjects\Lootbox;
 use PHPUnit\Framework\TestCase;
 
@@ -100,5 +99,23 @@ class LootboxObjectTest extends TestCase
 
         $this->assertGreaterThan(1400, $loot['Item:687']);
         $this->assertLessThan(2600, $loot['Item:687']);
+    }
+
+    public function test_add_invalid_item_weight_zero()
+    {
+        $lootbox = new Lootbox();
+
+        $this->expectException(\ValueError::class);
+
+        $lootbox->add('First Item', 0);
+    }
+
+    public function test_add_invalid_item_weight_negative()
+    {
+        $lootbox = new Lootbox();
+
+        $this->expectException(\ValueError::class);
+
+        $lootbox->add('First Item', -5);
     }
 }
