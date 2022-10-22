@@ -83,6 +83,7 @@ class LootCalculator implements LootboxInterface
                 return $itemReference;
             }
         }
+        throw new \RuntimeException('Nothing was drawn. In fact, this can not happen.');
     }
 
     private function roll(): int
