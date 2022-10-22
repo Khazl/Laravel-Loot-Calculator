@@ -3,7 +3,7 @@
 namespace Khazl\LootCalculator\Examples;
 
 use Khazl\LootCalculator\Contracts\LootboxInterface;
-use Khazl\LootCalculator\DomainObjects\Lootbox;
+use Khazl\LootCalculator\LootCalculator;
 
 class WolfLoot
 {
@@ -11,7 +11,7 @@ class WolfLoot
 
     public function __construct()
     {
-        $this->lootPool = new Lootbox([
+        $this->lootPool = new LootCalculator([
             'CharacterItem:462' => 200, // Leather
             'CharacterItem:9875' => 300, // Claw
             'AccountItem:64' => 1, // Very rare pet

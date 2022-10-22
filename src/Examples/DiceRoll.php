@@ -3,7 +3,7 @@
 namespace Khazl\LootCalculator\Examples;
 
 use Khazl\LootCalculator\Contracts\LootboxInterface;
-use Khazl\LootCalculator\DomainObjects\Lootbox;
+use Khazl\LootCalculator\LootCalculator;
 
 class DiceRoll
 {
@@ -11,7 +11,7 @@ class DiceRoll
 
     public function __construct()
     {
-        $this->dice = new Lootbox([
+        $this->dice = new LootCalculator([
             1 => 1,
             2 => 1,
             3 => 1,

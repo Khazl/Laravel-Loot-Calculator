@@ -4,8 +4,6 @@ namespace Khazl\LootCalculator;
 
 use Illuminate\Support\ServiceProvider;
 use Khazl\LootCalculator\Console\DebugCommand;
-use Khazl\LootCalculator\Contracts\LootboxServiceInterface;
-use Khazl\LootCalculator\Services\LootboxService;
 
 class LootCalculatorServiceProvider extends ServiceProvider
 {
@@ -16,11 +14,6 @@ class LootCalculatorServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        // $this->loadTranslationsFrom(__DIR__.'/../resources/lang', 'khazl');
-        // $this->loadViewsFrom(__DIR__.'/../resources/views', 'khazl');
-        // $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
-        // $this->loadRoutesFrom(__DIR__.'/routes.php');
-
         // Publishing is only necessary when using the CLI.
         if ($this->app->runningInConsole()) {
             $this->bootForConsole();
@@ -63,21 +56,6 @@ class LootCalculatorServiceProvider extends ServiceProvider
         $this->publishes([
             __DIR__.'/../config/loot-calculator.php' => config_path('loot-calculator.php'),
         ], 'loot-calculator.config');
-
-        // Publishing the views.
-        /*$this->publishes([
-            __DIR__.'/../resources/views' => base_path('resources/views/vendor/khazl'),
-        ], 'loot-calculator.views');*/
-
-        // Publishing assets.
-        /*$this->publishes([
-            __DIR__.'/../resources/assets' => public_path('vendor/khazl'),
-        ], 'loot-calculator.views');*/
-
-        // Publishing the translation files.
-        /*$this->publishes([
-            __DIR__.'/../resources/lang' => resource_path('lang/vendor/khazl'),
-        ], 'loot-calculator.views');*/
 
         // Registering package commands.
         $this->commands([

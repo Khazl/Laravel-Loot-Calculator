@@ -3,6 +3,7 @@
 namespace Khazl\LootCalculator\Console;
 
 use Illuminate\Console\Command;
+use Khazl\LootCalculator\LootCalculator;
 use Khazl\LootCalculator\Examples\CoinToss;
 use Khazl\LootCalculator\Examples\DiceRoll;
 use Khazl\LootCalculator\Examples\WolfLoot;
@@ -41,17 +42,33 @@ class DebugCommand extends Command
     {
         $this->line('--- DEBUG START ---');
 
+        $this->newLine();
+
         $this->line('--- Coin Toss ---');
         $coin = new CoinToss();
         $this->info($coin->flip());
+
+        $this->newLine();
 
         $this->line('--- Wolf Loot ---');
         $wolf = new WolfLoot();
         $this->info(json_encode($wolf->loot()));
 
+        $this->newLine();
+
         $this->line('--- Dice Roll ---');
         $dice = new DiceRoll();
         $this->info($dice->roll());
+
+        $this->newLine();
+
+        $this->line('--- Percentage Table ---');
+        $lootbox = new LootCalculator();
+        $lootbox->add('Very Common', 999);
+        $lootbox->add('Rare', 1);
+        dump($lootbox->getContentWithPercentages());
+
+        $this->newLine();
 
         $this->line('--- DEBUG START ---');
     }

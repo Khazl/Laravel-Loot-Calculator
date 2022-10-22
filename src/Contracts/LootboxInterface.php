@@ -13,4 +13,6 @@ interface LootboxInterface
     public function getTotalWeight(): float;
 
     public function draw(): string;
+
+    public function getContentWithPercentages(): array;
 }

@@ -3,7 +3,7 @@
 namespace Khazl\LootCalculator\Examples;
 
 use Khazl\LootCalculator\Contracts\LootboxInterface;
-use Khazl\LootCalculator\DomainObjects\Lootbox;
+use Khazl\LootCalculator\LootCalculator;
 
 class CoinToss
 {
@@ -11,7 +11,7 @@ class CoinToss
 
     public function __construct()
     {
-        $this->coin = new Lootbox([
+        $this->coin = new LootCalculator([
             'Heads' => 50,
             'Tails' => 50
         ]);

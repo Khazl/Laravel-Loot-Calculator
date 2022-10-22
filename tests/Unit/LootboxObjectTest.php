@@ -2,14 +2,14 @@
 
 namespace Khazl\LootCalculator\Tests\Unit;
 
-use Khazl\LootCalculator\DomainObjects\Lootbox;
+use Khazl\LootCalculator\LootCalculator;
 use PHPUnit\Framework\TestCase;
 
 class LootboxObjectTest extends TestCase
 {
     public function test_adding_items_manually()
     {
-        $lootbox = new Lootbox();
+        $lootbox = new LootCalculator();
         $lootbox->add('First Item', 50);
 
         $this->assertEquals(1, count($lootbox->getContent()));
@@ -18,7 +18,7 @@ class LootboxObjectTest extends TestCase
 
     public function test_adding_items_construct()
     {
-        $lootbox = new Lootbox([
+        $lootbox = new LootCalculator([
             'First Item' => 20,
             'Second Item' => 30
         ]);
@@ -32,7 +32,7 @@ class LootboxObjectTest extends TestCase
 
     public function test_removing_items()
     {
-        $lootbox = new Lootbox();
+        $lootbox = new LootCalculator();
         $lootbox->add('First Item', 50);
         $lootbox->add('Second Item', 10);
 
@@ -45,7 +45,7 @@ class LootboxObjectTest extends TestCase
 
     public function test_total_weight()
     {
-        $lootbox = new Lootbox();
+        $lootbox = new LootCalculator();
         $lootbox->add('First Item', 50);
         $lootbox->add('Second Item',10);
         $lootbox->add('Third Item', 10);
@@ -59,7 +59,7 @@ class LootboxObjectTest extends TestCase
 
     public function test_draw_50_50()
     {
-        $lootbox = new Lootbox();
+        $lootbox = new LootCalculator();
 
         $lootbox->add('First Item', 50);
         $lootbox->add('Second Item', 50);
@@ -69,7 +69,7 @@ class LootboxObjectTest extends TestCase
 
     public function test_draw_empty_lootbox()
     {
-        $lootbox = new Lootbox();
+        $lootbox = new LootCalculator();
 
         $this->expectException(\Exception::class);
 
@@ -78,7 +78,7 @@ class LootboxObjectTest extends TestCase
 
     public function test_draw_distribution()
     {
-        $lootbox = new Lootbox();
+        $lootbox = new LootCalculator();
 
         $lootbox->add('Item:45', 49);
         $lootbox->add('Item:687', 1);
@@ -103,7 +103,7 @@ class LootboxObjectTest extends TestCase
 
     public function test_add_invalid_item_weight_zero()
     {
-        $lootbox = new Lootbox();
+        $lootbox = new LootCalculator();
 
         $this->expectException(\ValueError::class);
 
@@ -112,10 +112,27 @@ class LootboxObjectTest extends TestCase
 
     public function test_add_invalid_item_weight_negative()
     {
-        $lootbox = new Lootbox();
+        $lootbox = new LootCalculator();
 
         $this->expectException(\ValueError::class);
 
         $lootbox->add('First Item', -5);
+    }
+
+    public function test_content_with_percentages()
+    {
+        $lootbox = new LootCalculator();
+
+        $lootbox->add('First Item', 999);
+        $lootbox->add('Second Item', 1);
+
+        $result = $lootbox->getContentWithPercentages();
+
+        $this->assertEquals(99.9, $result['First Item']);
+        $this->assertEquals(0.1, $result['Second Item']);
+
+        $lootbox->remove('First Item');
+
+        $this->assertEquals(100, $lootbox->getContentWithPercentages()['Second Item']);
     }
 }
