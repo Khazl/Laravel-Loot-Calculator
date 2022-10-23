@@ -1,6 +1,6 @@
 {
     "name": "khazl/loot-calculator",
-    "description": ":package_description",
+    "description": "Helps to pick one out of several possible outcomes, taking into account their probability.",
     "license": "MIT",
     "authors": [
         {
@@ -8,7 +8,11 @@
         }
     ],
     "homepage": "https://github.com/khazl/loot-calculator",
-    "keywords": ["Laravel", "LootCalculator"],
+    "keywords": [
+        "Laravel", "LootCalculator", "Lootbox",
+        "Random", "Weighted Random", "Lootpool",
+        "Gamification", "Dice", "Coin"
+    ],
     "require": {
         "illuminate/support": "~9"
     },

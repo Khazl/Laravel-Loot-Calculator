@@ -16,6 +16,14 @@ class LootboxObjectTest extends TestCase
         $this->assertEquals(50, $lootbox->getContent()['First Item']);
     }
 
+    public function test_adding_items_already_exists()
+    {
+        $lootbox = new LootCalculator();
+        $lootbox->add('First Item', 50);
+
+        $this->assertEquals(false, $lootbox->add('First Item', 50));
+    }
+
     public function test_adding_items_construct()
     {
         $lootbox = new LootCalculator([
@@ -41,6 +49,14 @@ class LootboxObjectTest extends TestCase
         $lootbox->remove('Second Item');
 
         $this->assertEquals(1, count($lootbox->getContent()));
+    }
+
+    public function test_removing_item_not_exists()
+    {
+        $lootbox = new LootCalculator();
+        $lootbox->add('First Item', 50);
+
+        $this->assertEquals(false, $lootbox->remove('Second Item'));
     }
 
     public function test_total_weight()
