@@ -1,5 +1,7 @@
 # LootCalculator
 
+[![Build & Test](https://github.com/Khazl/Loot-Calculator/actions/workflows/php.yml/badge.svg)](https://github.com/Khazl/Loot-Calculator/actions/workflows/php.yml)
+
 Helps to pick one out of several possible outcomes, taking into account their probability.  
 Like a coin toss, dice roll or lootbox / grab bag.
 
