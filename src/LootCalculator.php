@@ -7,7 +7,7 @@ use Khazl\LootCalculator\Contracts\LootboxInterface;
 class LootCalculator implements LootboxInterface
 {
     private array $content = [];
-    private float $weight = 0;
+    private int $weight = 0;
 
     public function __construct(array $items = [])
     {
@@ -49,7 +49,7 @@ class LootCalculator implements LootboxInterface
         return $this->content;
     }
 
-    public function getTotalWeight(): float
+    public function getTotalWeight(): int
     {
         return $this->weight;
     }

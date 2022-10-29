@@ -10,7 +10,7 @@ interface LootboxInterface
 
     public function getContent(): array;
 
-    public function getTotalWeight(): float;
+    public function getTotalWeight(): int;
 
     public function draw(): string;
 
