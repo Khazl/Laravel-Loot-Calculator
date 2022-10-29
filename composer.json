@@ -26,5 +26,8 @@
             "Khazl\\LootCalculator\\Tests\\": "tests"
         }
     },
+    "scripts": {
+        "test": "phpunit"
+    },
     "extra": {}
 }
