@@ -2,12 +2,12 @@
 
 namespace Khazl\LootCalculator\Examples;
 
-use Khazl\LootCalculator\Contracts\LootboxInterface;
+use Khazl\LootCalculator\Contracts\LootCalculatorInterface;
 use Khazl\LootCalculator\LootCalculator;
 
 class CoinToss
 {
-    private LootboxInterface $coin;
+    private LootCalculatorInterface $coin;
 
     public function __construct()
     {

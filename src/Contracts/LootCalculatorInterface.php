@@ -2,7 +2,7 @@
 
 namespace Khazl\LootCalculator\Contracts;
 
-interface LootboxInterface
+interface LootCalculatorInterface
 {
     public function add(string $itemReference, int $weight): bool;
 

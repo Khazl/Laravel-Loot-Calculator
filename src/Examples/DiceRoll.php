@@ -2,12 +2,12 @@
 
 namespace Khazl\LootCalculator\Examples;
 
-use Khazl\LootCalculator\Contracts\LootboxInterface;
+use Khazl\LootCalculator\Contracts\LootCalculatorInterface;
 use Khazl\LootCalculator\LootCalculator;
 
 class DiceRoll
 {
-    private LootboxInterface $dice;
+    private LootCalculatorInterface $dice;
 
     public function __construct()
     {

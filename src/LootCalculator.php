@@ -2,9 +2,9 @@
 
 namespace Khazl\LootCalculator;
 
-use Khazl\LootCalculator\Contracts\LootboxInterface;
+use Khazl\LootCalculator\Contracts\LootCalculatorInterface;
 
-class LootCalculator implements LootboxInterface
+class LootCalculator implements LootCalculatorInterface
 {
     private array $content = [];
     private int $weight = 0;
