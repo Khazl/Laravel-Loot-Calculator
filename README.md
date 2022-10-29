@@ -26,12 +26,12 @@ The key of this array is the outcome reference. The value is the probability in 
 
 ```php
     $dice = new LootCalculator([
-        1 => 1,
-        2 => 1,
-        3 => 1,
-        4 => 1,
-        5 => 1,
-        6 => 1
+        'One' => 1,
+        'Two' => 1,
+        'Three' => 1,
+        'Four' => 1,
+        'Five' => 1,
+        'Six' => 1
     ]);
 ```
 
@@ -40,12 +40,12 @@ The first parameter is the outcome reference and the second parameter is the pro
 
 ```php
     $dice = new LootCalculator();
-    $dice->add(1, 1);
-    $dice->add(2, 1);
-    $dice->add(3, 1);
-    $dice->add(4, 1);
-    $dice->add(5, 1);
-    $dice->add(6, 1);
+    $dice->add('One', 1);
+    $dice->add('Two', 1);
+    $dice->add('Three', 1);
+    $dice->add('Four', 1);
+    $dice->add('Five', 1);
+    $dice->add('Six', 1);
 ```
 
 Now we have a loot-calculator with six different outcomes (the faces of a common dice) and all with the same probability.
@@ -55,7 +55,7 @@ Now we have a loot-calculator with six different outcomes (the faces of a common
 If we now want to draw an outcome, we call the `draw` method on our loot calculator.
 
 ```php
-    $result = $dice->draw();
+    $result = $dice->draw(); // e.g. 'Four'
 ```
 
 ### Look into the loot calculator
@@ -66,12 +66,12 @@ To see the content of an existing loot calculator, two different methods are ava
     $dice->getContent();
     /* returns:
     array:6 [
-        1 => 1
-        2 => 1
-        3 => 1
-        4 => 1
-        5 => 1
-        6 => 1
+        'One' => 1
+        'Two' => 1
+        'Three' => 1
+        'Four' => 1
+        'Five' => 1
+        'Six' => 1
     ]
     */
 ```
@@ -80,12 +80,12 @@ To see the content of an existing loot calculator, two different methods are ava
     $dice->getContentWithPercentages();
     /* returns:
     array:6 [
-        1 => 16.666666666667
-        2 => 16.666666666667
-        3 => 16.666666666667
-        4 => 16.666666666667
-        5 => 16.666666666667
-        6 => 16.666666666667
+        'One' => 16.666666666667
+        'Two' => 16.666666666667
+        'Three' => 16.666666666667
+        'Four' => 16.666666666667
+        'Five' => 16.666666666667
+        'Six' => 16.666666666667
     ]
     */
 ```
@@ -96,7 +96,7 @@ If we want to remove an outcome from an already existing loot-calculator,
 we call the `remove` method and pass the outcome reference as property.
 
 ```php
-    $dice->remove(4);
+    $dice->remove('Four');
 ```
 
 Now the dice would no longer have a four-eyed side.
@@ -136,6 +136,45 @@ The highest probability is open to the top. The higher you go, the less likely t
 
     $outcome = $omeletteCooking->draw();
 ```
+
+## API
+
+### add
+
+**Properties**  
+
+| Name | Type | Description |
+|---|---|---|
+| itemReference | `string` | Reference needed to identify the option. |
+| weight | `int` | Weighting that the "item" or option has in relation to all other options in the calculator. |
+
+**Return**: bool. `true` if the option was successfully added and `false` if something went wrong.
+
+### remove
+
+**Properties**  
+
+| Name          | Type     | Description                                                 |
+| ------------- | -------- | ----------------------------------------------------------- |
+| itemReference | `string` | Reference needed to identify the option you like to remove. |
+
+**Return**: `bool`. `true` if the option was successfully removed and `false` if something went wrong.
+
+### getTotalWeight
+
+**Return**: `int`. Total weight of all options within the calculator.
+
+### draw
+
+**Return**: `string`. The reference of the winner.
+
+### getContent
+
+**Return**: `array`. List of all options and their weighting within the calculator.
+
+### getContentWithPercentages
+
+**Return**: `array`. List of all options and their weighting in percentage within the calculator.
 
 ## Change log
 
