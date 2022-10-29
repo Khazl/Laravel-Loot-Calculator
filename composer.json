@@ -9,16 +9,12 @@
     ],
     "homepage": "https://github.com/khazl/loot-calculator",
     "keywords": [
-        "Laravel", "LootCalculator", "Lootbox",
-        "Random", "Weighted Random", "Lootpool",
-        "Gamification", "Dice", "Coin"
+        "LootCalculator", "Lootbox", "Random",
+        "Weighted Random", "Lootpool", "Gamification",
+        "Dice", "Coin"
     ],
-    "require": {
-        "illuminate/support": "~9"
-    },
     "require-dev": {
-        "phpunit/phpunit": "^9.5",
-        "orchestra/testbench": "~7"
+        "phpunit/phpunit": "^9.5"
     },
     "autoload": {
         "psr-4": {
@@ -30,14 +26,5 @@
             "Khazl\\LootCalculator\\Tests\\": "tests"
         }
     },
-    "extra": {
-        "laravel": {
-            "providers": [
-                "Khazl\\LootCalculator\\LootCalculatorServiceProvider"
-            ],
-            "aliases": {
-                "LootCalculator": "Khazl\\LootCalculator\\Facades\\LootCalculator"
-            }
-        }
-    }
+    "extra": {}
 }
