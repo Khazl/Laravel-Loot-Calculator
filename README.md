@@ -1,5 +1,6 @@
 # LootCalculator
 
+[![Status](https://img.shields.io/badge/status-active-success.svg)]() 
 [![Build & Test](https://github.com/Khazl/Loot-Calculator/actions/workflows/php.yml/badge.svg)](https://github.com/Khazl/Loot-Calculator/actions/workflows/php.yml)
 
 Helps to pick one out of several possible outcomes, taking into account their probability.  
